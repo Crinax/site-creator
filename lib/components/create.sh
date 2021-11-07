@@ -1,30 +1,33 @@
-CURRENT_DIR='./lib/components/'
-create () {
+SRC_DIR="${SRC_DIR}/components";
 
-	PATH_TO_SITE='/usr/share/nginx/';
+create () {
+	local src_dir="${_SITE_CREATOR_SRC_DIR}/lib/components/sources";
+	local path_to_site='/usr/share/nginx/';
 
 	# Was user set 3-rd argument?
 	if [[ $2 != "" ]];
 	then
-		PATH_TO_SITE=$2;
+		path_to_site=$2;
 	fi
 
 	# Is path to site exists?
-	if ! [[ -d $PATH_TO_SITE ]];
+	if ! [[ -d $path_to_site ]];
 	then
-		echo "Error 128: no such file or directory \"$PATH_TO_SITE\"";
+		echo "Error 128: no such file or directory \"$path_to_site\"";
 		return 128;
 	fi
 
 	# Is path to configs exists?
 	if ! [[ -d /etc/nginx/sites-available ]];
 	then
-		mkdir /etc/nginx/sites-available;
+		sudo mkdir /etc/nginx/sites-available;
 	fi
 
 	# Replace all "/" to "\/"
-	PATH_TO_SITE=$(echo $PATH_TO_SITE | sed -e 's/\//\\\//g');
+	path_to_site=$(echo $path_to_site | sed -e 's/\//\\\//g');
 
-	cp "$CURRENT_DIR"sources/example.conf /etc/nginx/sites-available/$1.conf;
-	sed -i -e "s/|=domen=|/$1/; s/|=path=|/$PATH_TO_SITE/" /etc/nginx/sites-available/$1.conf;
+	sudo cp "${src_dir}/example.conf" "/etc/nginx/sites-available/${1}.conf";
+	sudo sed -i -e "s/|=domen=|/${1}/; s/|=path=|/${path_to_site}/" "/etc/nginx/sites-available/${1}.conf";
+	unset src_dir
+	unset path_to_site
 }
