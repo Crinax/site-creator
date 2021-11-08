@@ -1,4 +1,4 @@
-site_list () {
+function site_list () {
 	local av_files=($(sudo ls '/etc/nginx/sites-available' ));
 	# Cursor movement
 	local next_column='\033[39C';
@@ -28,24 +28,16 @@ site_list () {
 			if [[ -L "/etc/nginx/sites-enabled/${file}" ]];
 			then
 				file_status="${site_status[2]}";
+			else
+				file_status="${site_status[1]}";
 			fi
 		fi
 
 		echo "${blue}${domen}${nc}${next_column}${file_status}";
 
-		unset file_status;
-		unset domen;
-		unset domen_length;
-		unset path_to_site;
+		unset file_status domen domen_length path_to_site;
 	done
 
-	unset av_files;
-	unset index;
-	unset next_column;
-	unset red;
-	unset green;
-	unset nc;
-	unset blue;
-	unset yellow;
-	unset site_status;
+	unset av_files index next_column red green nc blue yellow site_status;
+	return 1;
 }

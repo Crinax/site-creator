@@ -28,6 +28,7 @@ create_site () {
 
 	sudo cp "${src_dir}/example.conf" "/etc/nginx/sites-available/${1}.conf";
 	sudo sed -i -e "s/|=domen=|/${1}/; s/|=path=|/${path_to_site}/" "/etc/nginx/sites-available/${1}.conf";
-	unset src_dir
-	unset path_to_site
+	unset src_dir path_to_site;
+
+	echo "Site has been created!"
 }
