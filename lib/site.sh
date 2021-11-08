@@ -6,10 +6,9 @@ site () {
 	case $1 in
 		"create")
 			source "${com_dir}/create.sh";
-			create $2 $3;
+			create_site $2 $3;
 			$_ERR_CODE=$?;
-			unset -f create;
-			return $_ERR_CODE;
+			unset -f create_site;
 		;;
 		"activate")
 			echo 'activate';
@@ -21,7 +20,10 @@ site () {
 			echo 'deactivate';
 		;;
 		"list")
-			echo 'list';
+			source "${com_dir}/list.sh";
+			site_list;
+			$_ERR_CODE=$?;
+			unset -f site_list;
 		;;
 		*)
 			echo "Error 127: unknown command '$1'";
@@ -29,4 +31,5 @@ site () {
 		;;
 	esac
 	unset com_dir;
+	return $_ERR_CODE;
 }

@@ -1,6 +1,6 @@
 SRC_DIR="${SRC_DIR}/components";
 
-create () {
+create_site () {
 	local src_dir="${_SITE_CREATOR_SRC_DIR}/lib/components/sources";
 	local path_to_site='/usr/share/nginx/';
 
